@@ -1,22 +1,21 @@
 #include <cstdio>
 #include <cstring>
 #include <algorithm>
-#define N 5
+#define N 18
 int T,n,m;
-int ln[0<<N];
+int ln[1<<N];
 int e[N][N][N];
 int min[1<<N];
 struct Pig{
 	float x,y;
 }p[N];
 bool comp(Pig x,Pig y){
-	return x.x<y.x;
+	return x.x<y.x||(x.x==y.x&&x.y<y.y);
 }
 bool co(int p0,int p1,int p2){
 	float x0=p[p0].x,x1=p[p1].x,x2=p[p2].x;
 	float y0=p[p0].y,y1=p[p1].y,y2=p[p2].y;
 	float k0=y0/x0,k1=y1/x1,k2=y2/x2;
-	if (x0==x1||x1==x2||x2==x0) return false;
 	return (x0-x1)/(k0-k1)==(x1-x2)/(k1-k2);
 }
 void work(){
@@ -55,7 +54,7 @@ void work(){
 	printf("%d\n",min[(1<<n)-1]);
 }
 int main(){
-	freopen("angrybirds.in","r",stdin);
+	//freopen("angrybirds.in","r",stdin);
 	for (int i=0;i<N;i++)
 		ln[1<<i]=i;
 	scanf("%d",&T);
