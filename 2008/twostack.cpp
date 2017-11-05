@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <algorithm>
 #define N 1001
-int n,a[N],b[N],c=0,s[2][N],t[2]={-1,-1},min=0,max;
+int n,a[N],b[N],c=0,s[2][N],t[2]={-1,-1},min=0,max,h=-1;
 char o[2*N];
 int main(){
 	scanf("%d",&n);
@@ -12,16 +12,14 @@ int main(){
 	}
 	std::sort(b,b+n);
 	for (int i=0;i<n;i++){
-		//if (a[i]==b[max]) max--;
-		if ((t[0]<0||s[0][t[0]]>=a[i])&&(t[1]<0||s[1][t[1]]>=b[max]))
+		if ((t[0]<0||s[0][t[0]]>=a[i]))
 			s[0][++t[0]]=a[i],o[++h]='a';
 		else
-			if ((t[1]<0||s[1][t[1]]>=a[i])&&(t[0]<0||s[0][t[0]]>=b[max]))
+			if ((t[1]<0||s[1][t[1]]>=a[i]))
 				s[1][++t[1]]=a[i],o[++h]='c';
 			else{
-				o[++h]='0';
-				//puts("0");
-				//return 0;
+				puts("0");
+				return 0;
 			}
 		for (;;)
 			if (t[0]>=0&&c<=n&&b[c]==s[0][t[0]])
