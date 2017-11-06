@@ -12,8 +12,8 @@ long long read(){
 	return pn*ret;
 }
 inline long long mul(long long x,long long p){
-	if (int(sqrt(x)*sqrt(p))<HA)
-		return x*p;
+	//if ((float(x)*float(p))<float(HA))
+		//return x*p;
 	long long ret=0,pn=1;
 	if (x<0) x=-x,pn=-pn;
 	if (p<0) p=-p,pn=-pn;
@@ -33,8 +33,6 @@ int main(){
 			for (int j=0;j<=n;j++){
 				sum=(sum+mul(p,a[j]))%HA;
 				p=mul(p,i);
-				//sum=(sum+p*a[j])%HA;
-				//p=p*i%HA;
 			}
 		if (sum%HA==0)
 			ans[++ans[0]]=i;
