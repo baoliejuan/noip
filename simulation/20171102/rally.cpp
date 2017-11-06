@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #ifdef D
-#define N 6
-#define Q 6
+#define N 82
+#define Q 80
 #else
 #define N 402
 #define Q 1000000
@@ -29,20 +29,12 @@ int main(){
 				p[l]=(p[l-1]+sum[l][j]-sum[l][i-1])%k;
 			for (int l=n;l>0;l--)
 				b[l]=(b[l+1]+sum[l][j]-sum[l][i-1])%k;
-			for (int l=1;l<=n+1;l++)
-				count[b[l]]++;
-			for (int l=0;l<=n;l++)
+			for (int l=n-1;l>=0;l--){
+				count[b[l+2]]++;
 				ans+=count[(s-p[l]+k)%k];
-			//printf("%d\n",s);
-			for (int l=0;l<=n;l++){
-				//printf("%d\n",p[i]+b[i+1]);
-				if ((p[l]+b[l+1]-s)%k==0){
-					//printf("dec\n");
-					ans--;
-				}
 			}
-			for (int l=1;l<=n+1;l++)
+			for (int l=2;l<=n+1;l++)
 				count[b[l]]--;
 		}
-	printf("%d\n",ans/2);
+	printf("%d\n",ans);
 }
