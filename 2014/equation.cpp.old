@@ -1,0 +1,39 @@
+#include <stdio.h>
+//#define HA 10000000007
+long long a[101],n,m,ans[1000001]={0};
+long long read(){
+	char r;long long ret=0,pn=1;
+	//for (r=getchar();r!='-'&&r<'0'&&r>'9';r=getchar())putchar(r);
+	for (r=getchar();r<'0'||r>'9';r=getchar())
+		if (r=='-') pn=-1;
+	//putchar(r);
+	ret=int(r)-int('0');
+	//if (r=='-') pn=-1,ret=int(getchar())-int('0');
+	//else ret=int(r)-int('0');
+	//ret=int(getchar())-int('0');
+	for (r=getchar();r>='0'&&r<='9';r=getchar())
+		//putchar(r);
+		ret=(ret*10+(long long)(r)-(long long)('0'))%HA;
+	//printf("%d %d\n",pn,ret);
+	return pn*ret;
+}
+int main(){
+	scanf("%lld%lld",&n,&m);
+	for (int i=0;i<=n;i++)
+		a[i]=read();
+	for (int i=1;i<=m;i++){
+		long long sum=0,p=1,flag=1;
+		for (int h=0;h<5;h++){
+			for (int j=0;j<=n;j++){
+				sum+=(p*a[j])%HA[h];
+				p=p*i%HA[h];
+			}
+		}
+		if (flag)
+			ans[++ans[0]]=i;
+	}
+	for (int i=0;i<=ans[0];i++)
+		printf("%lld\n",ans[i]);
+	//for (int i=0;i<n;i++)
+		//printf("%lld\n",a[i]);
+}
