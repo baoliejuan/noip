@@ -12,11 +12,11 @@ long long read(){
 	return pn*ret;
 }
 inline long long mul(long long x,long long p){
-	//if ((float(x)*float(p))<float(HA))
-		//return x*p;
 	long long ret=0,pn=1;
 	if (x<0) x=-x,pn=-pn;
 	if (p<0) p=-p,pn=-pn;
+	if ((float(x)*float(p))<float(HA))
+		return pn*x*p;
 	for (;p;p>>=1){
 		if (p&1)
 			ret=(ret+x)%HA;
@@ -29,10 +29,12 @@ int main(){
 	for (int i=0;i<=n;i++)
 		a[i]=read();
 	for (int i=1;i<=m;i++){
-		long long sum=0,p=1;
-			for (int j=0;j<=n;j++){
-				sum=(sum+mul(p,a[j]))%HA;
-				p=mul(p,i);
+		long long sum=a[n];
+			for (int j=n-1;j>=0;j--){
+				//sum=(sum+mul(p,a[j]))%HA;
+				//p=mul(p,i);
+				sum=mul(sum,i);
+				sum=(sum+a[j])%HA;
 			}
 		if (sum%HA==0)
 			ans[++ans[0]]=i;
