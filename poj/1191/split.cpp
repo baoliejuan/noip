@@ -1,6 +1,7 @@
 //POJ1191
 #include <stdio.h>
 #include <math.h>
+#define dev(x) ((float(x)-avr)*(float(x)-avr))
 int n,a[8][8],sum_bk[8][8][8][8]={0};
 float avr=0,INF=1e8,dp[8][8][8][8][16]={0};
 int sum(int x0,int y0,int x1,int y1){
@@ -10,19 +11,16 @@ int sum(int x0,int y0,int x1,int y1){
 	for (int i=x0;i<=x1;i++)
 		for (int j=y0;j<=y1;j++)
 			ret+=a[i][j];
-	return ret;
-}
-float dev(int x){
-	return (float(x)-avr)*(float(x)-avr);
+	return sum_bk[x0][y0][x1][y1]=ret;
 }
 float dfs(int x0,int y0,int x1,int y1,int t){
-	float min=INF;
+	if (dp[x0][y0][x1][y1][t])
+		return dp[x0][y0][x1][y1][t];
 	if ((x1-x0+1)*(y1-y0+1)<t)
-		return INF;
-	if (dp[x0][y0][x1][x1][n])
-		return dp[x0][y0][x1][x1][n];
+		return dp[x0][y0][x1][y1][t]=INF;
 	if (t==1)
-		return dev(sum(x0,y0,x1,y1));
+		return dp[x0][y0][x1][y1][t]=dev(sum(x0,y0,x1,y1));
+	float min=INF;
 	for (int i=x0;i<x1;i++)
 		if (min>dev(sum(x0,y0,i,y1))+dfs(i+1,y0,x1,y1,t-1))
 			min=dev(sum(x0,y0,i,y1))+dfs(i+1,y0,x1,y1,t-1);
@@ -35,7 +33,7 @@ float dfs(int x0,int y0,int x1,int y1,int t){
 	for (int i=y1;i>y0;i--)
 		if (min>dev(sum(x0,i,x1,y1))+dfs(x0,y0,x1,i-1,t-1))
 			min=dev(sum(x0,i,x1,y1))+dfs(x0,y0,x1,i-1,t-1);
-	return (dp[x0][y0][x1][y1][t]=min);
+	return dp[x0][y0][x1][y1][t]=min;
 }
 int main(){
 #ifdef D
@@ -47,6 +45,5 @@ int main(){
 			scanf("%d",&a[i][j]),
 				avr+=a[i][j];
 	avr/=n;
-	//printf("%d %f\n",sum,avr);
 	printf("%.3f\n",sqrt(dfs(0,0,7,7,n)/n));
 }
